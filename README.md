@@ -67,3 +67,8 @@ The contact form accepts a name, email address, and message. Laravel validates t
 ## Purpose
 
 This project demonstrates a responsive business landing page built with Laravel and custom CSS.
+## Accessibility
+
+- Keyboard users can navigate links, buttons, and form fields with visible focus indicators.
+- Form fields should have clear labels and validation feedback.
+- Responsive styling helps users access the page on different screen sizes.
