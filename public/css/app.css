@@ -199,3 +199,11 @@ footer p {
         width: 100%;
     }
 }
+/* Improve keyboard navigation accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #6A1B4D;
+    outline-offset: 3px;
+}
