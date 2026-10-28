@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lead extends Model
 {
-    use HasFactory;
+        use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'source',
+        'status',
+    ];
 }

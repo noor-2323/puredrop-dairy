@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
 
 Route::post('/contact', function (Request $request) {
     $request->validate([
