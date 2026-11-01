@@ -23,3 +23,14 @@ Route::post('/contact', function (Request $request) {
         'Thank you for contacting PureDrop Dairy! We will get back to you soon.'
     );
 })->name('contact.submit');
+
+Route::get('/session-debug-noor-2026', function () {
+    session()->put('session_test', 'working');
+
+    return response()->json([
+        'session_driver' => config('session.driver'),
+        'session_domain' => config('session.domain'),
+        'session_secure' => config('session.secure'),
+        'session_id_created' => session()->getId() !== '',
+    ]);
+});
