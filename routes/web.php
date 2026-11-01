@@ -34,3 +34,11 @@ Route::get('/session-debug-noor-2026', function () {
         'session_id_created' => session()->getId() !== '',
     ]);
 });
+Route::get('/test-session', function () {
+    session(['session_test' => 'PureDrop CRM']);
+
+    return response()->json([
+        'message' => 'Session test successful',
+        'session_value' => session('session_test'),
+    ]);
+});
