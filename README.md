@@ -1,74 +1,229 @@
-# PureDrop Dairy
+# PureDrop Dairy Sales CRM
 
-A responsive landing page for PureDrop Dairy, developed as a Laravel 10 project.
+A Laravel 10-based Customer Relationship Management (CRM) application for managing dairy business leads and contacts.
 
-## Features
+## Live Application
 
-- Responsive navigation header
-- Hero section with a call-to-action button
-- About PureDrop Dairy section
-- Contact form with name, email, and message fields
-- Server-side validation using Laravel
-- Success message after successful form submission
-- Responsive design for desktop and mobile screens
+https://puredrop-dairy.onrender.com
+
+## GitHub Repository
+
+https://github.com/noor-2323/puredrop-dairy
 
 ## Technologies Used
 
 - Laravel 10
-- PHP
-- HTML5
-- CSS3
+- PHP 8.3
+- MySQL (Aiven)
+- HTML5 and CSS3
+- Docker
+- Render
+- Git and GitHub
 
-## Project Structure
+## Features
 
-- `resources/views/home.blade.php` — Landing page layout
-- `public/css/app.css` — Custom styling and responsive design
-- `routes/web.php` — Home page and contact form routes
+- Responsive landing page
+- Contact form with server-side validation
+- Leads and contacts database tables
+- Lead factory and sample-data seeder
+- REST API for lead management
+- API token authentication
+- Lead search by name or email
+- Pagination (5 records per page)
+- Production database migrations
 
-## Requirements
+## Local Installation
 
-- PHP
+### Requirements
+
+- PHP 8.3 or compatible version
 - Composer
+- MySQL
+- Git
 
-## Installation
+### Setup Instructions
 
-1. Clone or download the repository.
-2. Open a terminal in the project directory.
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/noor-2323/puredrop-dairy.git
+   ```
+
+2. Enter the project folder:
+
+   ```bash
+   cd puredrop-dairy
+   ```
+
 3. Install dependencies:
 
    ```bash
    composer install
    ```
 
-4. Create your environment file:
+4. Create the environment file:
 
    ```bash
    copy .env.example .env
    ```
 
-5. Generate the application key:
+5. Create a MySQL database named `puredrop_dairy` and configure the database credentials in `.env`.
+
+6. Generate the application key:
 
    ```bash
    php artisan key:generate
    ```
 
-6. Start the Laravel development server:
+7. Run database migrations and seed sample leads:
+
+   ```bash
+   php artisan migrate --seed
+   ```
+
+8. Start the development server:
 
    ```bash
    php artisan serve
    ```
 
-7. Open `http://127.0.0.1:8000` in your browser.
+9. Open http://127.0.0.1:8000 in your browser.
 
-## Contact Form
+## Database Structure
 
-The contact form accepts a name, email address, and message. Laravel validates the submitted information and displays a confirmation message after successful submission.
+The application includes:
+
+- **Leads:** Stores name, email, phone, source, status, and timestamps.
+- **Contacts:** Stores contact information and a foreign key relationship to leads.
+
+The LeadFactory and LeadSeeder generate 10 sample leads for local development.
+
+## Production Deployment
+
+The application is deployed on Render using Docker and an Aiven MySQL database.
+
+### Deployment Steps
+
+1. Push the project to GitHub.
+2. Create a Render Web Service and connect the repository.
+3. Select Docker as the deployment environment.
+4. Configure the production environment variables.
+5. Deploy the application.
+
+### Environment Variables
+
+Configure these in the Render dashboard:
+
+- `APP_ENV=production`
+- `APP_DEBUG=false`
+- `APP_KEY`
+- `APP_URL`
+- `API_TOKEN`
+- `DB_CONNECTION=mysql`
+- `DB_HOST`
+- `DB_PORT`
+- `DB_DATABASE`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+- `MYSQL_ATTR_SSL_CA=/var/www/html/docker/certs/ca.pem`
+
+Use your own database credentials and secret values. Never publish passwords or API tokens in GitHub or this README.
+
+The Docker startup command runs:
+
+```bash
+php artisan migrate --force
+```
+
+This applies pending migrations to the production database before starting the Laravel server.
+
+## REST API Documentation
+
+All lead-management endpoints require API token authentication.
+
+### Authentication Header
+
+```http
+Accept: application/json
+X-API-Token: YOUR_API_TOKEN
+```
+
+Replace `YOUR_API_TOKEN` with the secret configured in the Render environment variables.
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/leads` | Retrieve paginated leads |
+| POST | `/api/leads` | Create a new lead |
+| PUT | `/api/leads/{id}` | Update a lead |
+| DELETE | `/api/leads/{id}` | Delete a lead |
+
+### Retrieve Leads
+
+```bash
+curl -H "Accept: application/json" -H "X-API-Token: YOUR_API_TOKEN" https://puredrop-dairy.onrender.com/api/leads
+```
+
+### Search Leads
+
+```text
+GET /api/leads?search=john
+```
+
+Searches leads by name or email.
+
+### Pagination
+
+```text
+GET /api/leads?page=2
+```
+
+The API returns five records per page.
+
+### Create a Lead
+
+Send a POST request to `/api/leads` with JSON data:
+
+```json
+{
+  "name": "John Smith",
+  "email": "john@example.com",
+  "phone": "03001234567",
+  "source": "Website",
+  "status": "new"
+}
+```
+
+### Update a Lead
+
+Send a PUT request to `/api/leads/{id}` with the updated JSON fields.
+
+### Delete a Lead
+
+Send a DELETE request to `/api/leads/{id}`.
+
+Include the authentication headers with all API requests.
+
+### API Response
+
+The GET endpoint returns paginated JSON containing:
+
+- `data`: Lead records
+- `current_page`: Current page number
+- `per_page`: Records per page
+- `total`: Total number of leads
+- `last_page`: Last available page
+
+Requests without a valid API token are rejected.
+
+## Accessibility
+
+- Keyboard navigation support
+- Visible focus indicators
+- Clear form labels and validation feedback
+- Responsive layouts for desktop and mobile devices
 
 ## Purpose
 
-This project demonstrates a responsive business landing page built with Laravel and custom CSS.
-## Accessibility
-
-- Keyboard users can navigate links, buttons, and form fields with visible focus indicators.
-- Form fields should have clear labels and validation feedback.
-- Responsive styling helps users access the page on different screen sizes.
+This project demonstrates Laravel development, database design, REST API development, authentication, Docker configuration, and cloud deployment.
