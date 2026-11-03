@@ -17,8 +17,7 @@ Route::middleware('api.token')->group(function () {
 
     Route::get('/db-check-noor', function () {
         try {
-            DB::connection()->getPdo();
-
+             DB::table('leads')->limit(1)->get();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Database connection successful.',
