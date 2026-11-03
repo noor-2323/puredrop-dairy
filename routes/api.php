@@ -31,16 +31,11 @@ Route::middleware('api.token')->group(function () {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Database connection successful.',
-            ]);
-        } catch (\Throwable $e) {
-            Log::error('Database connection diagnostic failed', [
-                'exception' => $e,
-            ]);
-
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Database connection failed. Check application logs.',
-            ], 500);
-        }
-    });
+       } catch (\Throwable $e) {
+    return response()->json([
+        'status' => 'error',
+        'exception' => get_class($e),
+        'message' => $e->getMessage(),
+    ], 500);
+}    });
 });
