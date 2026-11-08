@@ -128,14 +128,24 @@ Configure these in the Render dashboard:
 - `MYSQL_ATTR_SSL_CA=/var/www/html/docker/certs/ca.pem`
 
 Use your own database credentials and secret values. Never publish passwords or API tokens in GitHub or this README.
+### Production Database Migrations and Seeding
 
-The Docker startup command runs:
+The Docker startup command automatically runs:
 
 ```bash
-php artisan migrate --force
+php artisan migrate --force --seed
 ```
 
-This applies pending migrations to the production database before starting the Laravel server.
+This performs the following operations before starting the Laravel server:
+
+1. Applies pending migrations to the production database.
+2. Runs `DatabaseSeeder`, which calls `LeadSeeder`.
+3. Creates 10 sample leads using fixed email addresses.
+4. Uses `firstOrCreate()` to prevent duplicate sample leads on subsequent deployments or container restarts.
+
+
+Production database migrations and seeding are handled automatically during container startup.
+
 
 ## REST API Documentation
 
