@@ -13,20 +13,10 @@ class LeadSeeder extends Seeder
             Lead::firstOrCreate(
                 ['email' => "samplelead{$i}@puredrop.test"],
                 [
-                    'name' => fake()->name(),
-                    'phone' => fake()->phoneNumber(),
-                    'source' => fake()->randomElement([
-                        'Website',
-                        'Facebook',
-                        'Referral',
-                        'Advertisement',
-                    ]),
-                    'status' => fake()->randomElement([
-                        'new',
-                        'contacted',
-                        'qualified',
-                        'converted',
-                    ]),
+                    'name' => "Sample Lead {$i}",
+                    'phone' => "0300000000",
+                    'source' => 'Website',
+                    'status' => 'new',
                 ]
             );
         }
