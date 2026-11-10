@@ -42,3 +42,13 @@ Route::get('/test-session', function () {
         'session_value' => session('session_test'),
     ]);
 });
+
+Route::get('/debug-secure', function () {
+    return [
+        'secure'         => request()->secure(),
+        'proto_header'   => request()->header('X-Forwarded-Proto'),
+        'session_secure' => config('session.secure'),
+        'session_driver' => config('session.driver'),
+        'session_domain' => config('session.domain'),
+    ];
+});
