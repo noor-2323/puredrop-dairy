@@ -108,7 +108,7 @@ The application is deployed on Render using Docker and an Aiven MySQL database.
 2. Create a Render Web Service and connect the repository.
 3. Select Docker as the deployment environment.
 4. Configure the production environment variables.
-5. Deploy the application.
+5. Deploy the application. On startup, the container automatically runs database migrations and seeders using php artisan migrate --force --seed.
 
 ### Environment Variables
 
@@ -126,6 +126,14 @@ Configure these in the Render dashboard:
 - `DB_USERNAME`
 - `DB_PASSWORD`
 - `MYSQL_ATTR_SSL_CA=/var/www/html/docker/certs/ca.pem`
+- `SESSION_DRIVER=database`
+- `SESSION_LIFETIME=120`
+- `SESSION_ENCRYPT=false`
+- `SESSION_PATH=/`
+- `SESSION_DOMAIN` (leave blank unless a custom domain is required)
+- `SESSION_SECURE_COOKIE=true` (for HTTPS production)
+
+Generate the application key locally with `php artisan key:generate --show`, then copy the generated value into Render as `APP_KEY`. Keep this key private and do not commit it to GitHub.
 
 Use your own database credentials and secret values. Never publish passwords or API tokens in GitHub or this README.
 ### Production Database Migrations and Seeding
