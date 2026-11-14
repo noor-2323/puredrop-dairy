@@ -26,4 +26,5 @@ ENV APP_DEBUG=false
 
 EXPOSE 10000
 
-CMD php artisan optimize:clear && php artisan migrate --force --seed && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
+CMD php artisan optimize:clear && php artisan config:clear && php artisan config:cache && php artisan migrate --force --seed && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
+
