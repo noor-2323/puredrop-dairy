@@ -1,4 +1,4 @@
-﻿FROM php:8.3-cli
+FROM php:8.3-cli
 
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev \
@@ -23,5 +23,7 @@ RUN mkdir -p storage/framework/cache \
 
 ENV APP_ENV=production
 ENV APP_DEBUG=false
+
+EXPOSE 10000
 
 CMD php artisan optimize:clear && php artisan migrate --force --seed && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
